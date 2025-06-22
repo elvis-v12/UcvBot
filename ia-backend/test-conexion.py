@@ -5,17 +5,17 @@ try:
     conexion = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='',       # Deja vacío si no cambiaste la contraseña en XAMPP
-        database='ucvbot'  # Cambia esto por el nombre real
+        password='',      
+        database='ucvbot' 
     )
 
     if conexion.is_connected():
-        print("✅ Conexión exitosa a la base de datos")
+        print(" Conexión exitosa a la base de datos")
 
 except Error as e:
-    print(f"❌ Error al conectar: {e}")
+    print(f" Error al conectar: {e}")
 
 finally:
     if 'conexion' in locals() and conexion.is_connected():
         conexion.close()
-        print("🔒 Conexión cerrada")
+        print(" Conexión cerrada")
