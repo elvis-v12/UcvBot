@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -18,17 +19,31 @@ export class LoginComponent {
   message: string = '';
   messageType: 'success' | 'error' = 'success';
 
+  constructor(private http: HttpClient, private router: Router) {}
+
   login() {
     this.showError = !this.userName || !this.password;
     if (this.showError) return;
 
     this.isLoading = true;
-    // Aquí implementaremos la lógica de login
-    setTimeout(() => {
-      this.isLoading = false;
-      this.message = 'Login exitoso';
-      this.messageType = 'success';
-    }, 1500);
+
+    this.http.post<any>('http://localhost:5000/api/admins/login', {
+      v_userName: this.userName,
+      v_password: this.password
+    }).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.message = response.mensaje;
+        this.messageType = 'success';
+        console.log('Usuario logueado:', response.user);
+        // this.router.navigate(['/DIRECCION']); SE PUEDE REDIRIGIR A OTRA VISTA
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.message = error.error.mensaje || 'Error de conexión';
+        this.messageType = 'error';
+      }
+    });
   }
 
   addCharacter(char: string) {
