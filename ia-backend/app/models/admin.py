@@ -1,0 +1,44 @@
+from app.database import conectar
+
+def findById(admin_id):
+    conexion = conectar()
+    if not conexion:
+        return None
+    try:
+        cursor = conexion.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM admin WHERE id = %s", (admin_id,))
+        return cursor.fetchone()
+    finally:
+        conexion.close()
+
+def create(id, username, email, password):
+    conexion = conectar()
+    try:
+        cursor = conexion.cursor()
+        cursor.execute("INSERT INTO admin (id, v_userName, v_email, v_password) VALUES (%s, %s, %s, %s)", (id, username, email, password))
+        conexion.commit()
+        return cursor.lastrowid
+    finally:
+        conexion.close()
+
+def update(admin_id, username, email, password):
+    conexion = conectar()
+    try:
+        cursor = conexion.cursor()
+        cursor.execute("""
+            UPDATE admin SET v_userName = %s, v_email = %s, v_password = %s WHERE id = %s
+        """, (username, email, password, admin_id))
+        conexion.commit()
+        return cursor.rowcount
+    finally:
+        conexion.close()
+
+def delete(admin_id):
+    conexion = conectar()
+    try:
+        cursor = conexion.cursor()
+        cursor.execute("DELETE FROM admin WHERE id = %s", (admin_id,))
+        conexion.commit()
+        return cursor.rowcount
+    finally:
+        conexion.close()

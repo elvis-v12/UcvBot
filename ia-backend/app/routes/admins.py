@@ -1,23 +1,43 @@
 from flask import Blueprint, jsonify, request
+import uuid
+from app.models import admin
 
 adminRoutes = Blueprint('admins',__name__)
 
-@adminRoutes.route('/',methods=['GET'])
+@adminRoutes.route('/<string:id>',methods=['GET'])
 def findById(id):
-    data=request.json
-    return jsonify(data)
+    data=admin.findById(id)
+    if data:
+        return jsonify(data)
+    return jsonify({"mensaje":"Admin no encontrado"}),404
 
 @adminRoutes.route('/',methods=['POST'])
 def create():
     data=request.json
-    return jsonify(data)
+    id = str(uuid.uuid4())
+    user = admin.create(
+        id,
+        data['v_userName'],
+        data["v_email"],
+        data["v_password"]
+    )
+    return jsonify({"mensaje":"Admin creado",
+                    "id":id})
 
-@adminRoutes.route('/',methods=['PUT'])
+@adminRoutes.route('/<string:id>',methods=['PUT'])
 def update(id):
     data=request.json
-    return jsonify(data)
+    user = admin.update(id,
+                        data['v_userName'],
+                        data["v_email"],
+                        data["v_password"])
+    if user:
+        return jsonify({"mensaje":f"Admin {id} actualizado"})
+    return jsonify({"mensaje":"Admin no encontrado"}),404
 
-@adminRoutes.route('/',methods=['POST'])
+@adminRoutes.route('/<string:id>',methods=['DELETE'])
 def delete(id):
-    data=request.json
-    return jsonify(data)
+    user = admin.delete(id)
+    if user:
+        return jsonify({"mensaje":f"Admin {id} eliminado"})
+    return jsonify({"mensaje":"Admin no encontrado"}),404
