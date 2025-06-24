@@ -17,12 +17,17 @@
         <div *ngIf="activeTab==='buscar'" class="section animate-in">
           <h2>Buscar estudiante</h2>
           <input type="text" placeholder="Nombre o usuario..." [(ngModel)]="searchTerm" class="search-input"/>
-          <div *ngIf="filteredStudent" class="student-card">
-            <h3>{{ filteredStudent.nombre }}</h3>
-            <p>Nivel: <span class="nivel" [ngClass]="filteredStudent.nivel.toLowerCase()">{{ filteredStudent.nivel }}</span></p>
-            <p>Progreso estimado: <strong>{{ filteredStudent.progreso }}%</strong></p>
+          <div *ngFor="let estudiante of filteredStudents" class="student-card">
+            <h3>{{ estudiante.nombre }}</h3>
+            <p>Nivel: 
+              <span class="nivel" [ngClass]="estudiante.nivel.toLowerCase()">
+                {{ estudiante.nivel }}
+              </span>
+            </p>
+            <p>Progreso estimado: <strong>{{ estudiante.progreso }}%</strong></p>
           </div>
-          <div *ngIf="searchTerm && !filteredStudent" class="not-found">No se encontró el estudiante.</div>
+
+          <div *ngIf="searchTerm && !filteredStudents" class="not-found">No se encontró el estudiante.</div>
         </div>
   
         <!-- TAB: SUBIR PREGUNTA -->

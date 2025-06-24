@@ -36,7 +36,7 @@ export class LoginComponent {
         this.message = response.mensaje;
         this.messageType = 'success';
         console.log('Usuario logueado:', response.user);
-        // this.router.navigate(['/DIRECCION']); SE PUEDE REDIRIGIR A OTRA VISTA
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.isLoading = false;
