@@ -4,12 +4,11 @@
 
   <div class="perfil-header">
     <div class="perfil-icono">
-      <img src="assets/usuario.png" alt="Foto" class="foto-perfil" />
+      <img [src]="datosUsuario.foto || 'assets/usuario.png'" alt="Foto de perfil" class="foto-perfil" />
     </div>
     <div class="perfil-info">
-       <p>{{ datosUsuario.nombre }} {{ datosUsuario.apellido }}</p>
-  <p>{{ datosUsuario.correo }}</p>
-
+      <p>{{ datosUsuario.nombre }} {{ datosUsuario.apellidoPaterno }} {{ datosUsuario.apellidoMaterno }}</p>
+      <p>{{ datosUsuario.correo }}</p>
       <span class="rol">Administrador Principal</span>
     </div>
   </div>
@@ -17,18 +16,31 @@
   <div class="perfil-form">
     <h3>Información del Administrador</h3>
     <form>
-    
       <label for="nombre">Nombre</label>
-<input [value]="datosUsuario.nombre || 'Sin nombre'" disabled>
-      <label for="apellido">Apellido</label>
-<input [value]="datosUsuario.apellido || 'Sin apellido'" disabled>
+      <input [(ngModel)]="datosUsuario.nombre" name="nombre" [disabled]="!modoEdicion" />
+
+      <label for="apellidoPaterno">Apellido Paterno</label>
+      <input [(ngModel)]="datosUsuario.apellidoPaterno" name="apellidoPaterno" [disabled]="!modoEdicion" />
+
+      <label for="apellidoMaterno">Apellido Materno</label>
+      <input [(ngModel)]="datosUsuario.apellidoMaterno" name="apellidoMaterno" [disabled]="!modoEdicion" />
+
       <label for="correo">Correo Electrónico</label>
-     <input [value]="datosUsuario.correo || ''" disabled>
+      <input [(ngModel)]="datosUsuario.correo" name="correo" [disabled]="!modoEdicion" />
 
       <label for="usuario">Nombre de Usuario</label>
-<input [value]="datosUsuario.usuario || ''" disabled>
+      <input [(ngModel)]="datosUsuario.usuario" name="usuario" disabled />
+
       <label for="imagen">Imagen de Perfil</label>
-      <input id="imagen" type="file" />
+      <input id="imagen" type="file" (change)="onFileSelected($event)" [disabled]="!modoEdicion" />
+
+      <div class="botones-accion">
+        <button type="button" (click)="toggleEdicion()">
+          {{ modoEdicion ? 'Cancelar' : 'Editar Perfil' }}
+        </button>
+        <button *ngIf="modoEdicion" type="button" (click)="guardarCambios()">Guardar Cambios</button>
+        <button type="button" class="btn-volver" (click)="volverAlChat()">Volver al Chat</button>
+      </div>
     </form>
   </div>
 </div>

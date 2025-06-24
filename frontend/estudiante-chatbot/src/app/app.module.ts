@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http'; // <--- AÑADIR ESTO
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PerfilComponent } from '../perfil/perfil.component';
@@ -15,9 +16,10 @@ import { routes } from './app.routes';
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
-    HttpClientModule // <--- AÑADIR AQUÍ TAMBIÉN
+    HttpClientModule,  // ✅ Este es el único lugar donde va
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

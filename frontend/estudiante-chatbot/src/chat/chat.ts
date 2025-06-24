@@ -1,33 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'; // ✅ NECESARIO AQUÍ
+import { UsuarioService } from '../app/services/usuario.service';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-imports: [CommonModule],
+  imports: [CommonModule, RouterModule, HttpClientModule], // ✅ agrega HttpClientModule
   templateUrl: './chat.html',
   styleUrls: ['./chat.scss']
 })
 export class Chat implements OnInit {
-  nombre: string = '';
-  iniciales: string = 'US';
+  usuario: any;
   nombreUsuario: string = '';
+  iniciales: string = 'US';
   mostrarMenu: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private usuarioService: UsuarioService) {}
 
-  ngOnInit(): void {
-    if (typeof window !== 'undefined') {
-      const datos = localStorage.getItem('usuario');
-      if (datos) {
-        const info = JSON.parse(datos);
-        this.nombre = info.nombre || '';
-        this.nombreUsuario = `${info.nombre || ''} ${info.apellido || ''}`.trim();
-        const nombres = this.nombreUsuario.split(' ');
-        this.iniciales = nombres.map(n => n[0]).join('').substring(0, 2).toUpperCase();
-      }
+  async ngOnInit() {
+    this.usuario = await this.usuarioService.obtenerPerfil();
+
+    if (this.usuario) {
+      this.nombreUsuario = `${this.usuario.nombre || ''} ${this.usuario.apellidoPaterno || ''} ${this.usuario.apellidoMaterno || ''}`.trim();
+      const nombres = this.nombreUsuario.split(' ');
+      this.iniciales = nombres.map(n => n[0]).join('').substring(0, 2).toUpperCase();
     }
   }
 

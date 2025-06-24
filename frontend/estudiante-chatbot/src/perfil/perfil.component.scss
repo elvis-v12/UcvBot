@@ -33,17 +33,7 @@ $red: #c40000;
     border-radius: 10px;
     margin-bottom: 2rem;
 
-    .perfil-icono {
-      margin-right: 1rem;
-
-      .foto-perfil {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        object-fit: cover;
-      }
-    }
+  
 
     .perfil-info {
       h2 {
@@ -115,5 +105,38 @@ $red: #c40000;
         grid-template-columns: 1fr; // solo una columna
       }
     }
+  }
+}
+
+.perfil-icono img.foto-perfil {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.botones-accion {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .btn-volver {
+    background-color: #6c757d;
+  }
+
+  button:hover {
+    background-color: #0056b3;
   }
 }
