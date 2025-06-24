@@ -4,10 +4,12 @@
 
   <div class="perfil-header">
     <div class="perfil-icono">
-      <img src="assets/usuario.png" alt="Foto" class="foto-perfil">
+      <img src="assets/usuario.png" alt="Foto" class="foto-perfil" />
     </div>
     <div class="perfil-info">
-      <h2>Elvis Antonio Vega Miranda</h2>
+       <p>{{ datosUsuario.nombre }} {{ datosUsuario.apellido }}</p>
+  <p>{{ datosUsuario.correo }}</p>
+
       <span class="rol">Administrador Principal</span>
     </div>
   </div>
@@ -15,20 +17,18 @@
   <div class="perfil-form">
     <h3>Información del Administrador</h3>
     <form>
+    
       <label for="nombre">Nombre</label>
-      <input id="nombre" type="text" value="Elvis Antonio" readonly>
-
+<input [value]="datosUsuario.nombre || 'Sin nombre'" disabled>
       <label for="apellido">Apellido</label>
-      <input id="apellido" type="text" value="Vega Miranda" readonly>
-
+<input [value]="datosUsuario.apellido || 'Sin apellido'" disabled>
       <label for="correo">Correo Electrónico</label>
-      <input id="correo" type="email" value="evegami10@ucvvirtual.edu.pe" readonly>
+     <input [value]="datosUsuario.correo || ''" disabled>
 
       <label for="usuario">Nombre de Usuario</label>
-      <input id="usuario" type="text" value="Elvis123" readonly>
-
+<input [value]="datosUsuario.usuario || ''" disabled>
       <label for="imagen">Imagen de Perfil</label>
-      <input id="imagen" type="file">
+      <input id="imagen" type="file" />
     </form>
   </div>
 </div>

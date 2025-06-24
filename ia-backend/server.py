@@ -1,5 +1,3 @@
-# ia-backend/server.py
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -9,9 +7,11 @@ from app.routes.alternative import alternativeRoutes
 from app.routes.chat import chatRoutes
 from app.routes.level import levelRoutes
 from app.routes.message import messageRoutes
-
+from app.routes.registro import registro_bp
+from app.routes.login import login_bp
+from app.routes.perfil import perfil_bp 
 app = Flask(__name__)
-CORS(app)  # Permitir peticiones desde Angular
+CORS(app)
 
 @app.route('/')
 def home():
@@ -21,18 +21,19 @@ def home():
 def predict():
     data = request.get_json()
     pregunta = data.get('pregunta', '')
-    
-    # Aquí simulas una respuesta, luego puedes reemplazar con tu modelo real
     respuesta = f"Simulación: recibí tu pregunta '{pregunta}' y estoy procesando..."
-    
     return jsonify({'respuesta': respuesta})
 
+# Registrar rutas
 app.register_blueprint(studentRoutes, url_prefix='/api/students')
 app.register_blueprint(messageRoutes, url_prefix='/api/messages')
 app.register_blueprint(levelRoutes, url_prefix='/api/level')
 app.register_blueprint(adminRoutes, url_prefix='/api/admins')
 app.register_blueprint(alternativeRoutes, url_prefix='/api/alternative')
 app.register_blueprint(chatRoutes, url_prefix='/api/chats')
+app.register_blueprint(registro_bp, url_prefix='/api')
+app.register_blueprint(login_bp, url_prefix='/api')
+app.register_blueprint(perfil_bp, url_prefix='/api')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

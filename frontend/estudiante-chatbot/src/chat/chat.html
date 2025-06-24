@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <div class="chat-wrapper">
   <div class="sidebar">
     <button class="nuevo-chat">
@@ -10,12 +12,26 @@
         <img src="assets/bot-icon.png" alt="bot" />
         <span><strong>Ucv</strong><span class="barra">//</span><span class="red">Bot</span></span>
       </div>
-      <div class="avatar">LE</div>
+  <div class="user-menu">
+  <div class="avatar" (click)="toggleMenu()">{{ iniciales }}</div>
+  <div class="menu-dropdown" *ngIf="mostrarMenu">
+    <button (click)="irPerfil()">
+      <i class="fas fa-user-circle"></i> Perfil
+    </button>
+    <button (click)="cerrarSesion()">
+      <i class="fas fa-sign-out-alt"></i> Salir
+    </button>
+  </div>
+</div>
+
+
     </header>
 
     <main class="chat-body">
-      <h2>Hola, Luis</h2>
-      <p>¿En qué puedo ayudarte?</p>
+     <h2>Hola, {{ nombreUsuario }}</h2>
+<span>{{ iniciales }}</span>
+
+     <p>¿En qué puedo ayudarte?</p>
       <div class="botones">
         <button>Dame ejercicios básicos en Java</button>
         <button>Definición de Java</button>

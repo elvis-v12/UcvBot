@@ -20,23 +20,49 @@ export class Login {
 
   onLogin(): void {
     this.loading = true;
+    this.loginError = false;
 
-    setTimeout(() => {
+    const usuario = this.email.trim().split('@')[0];
+
+    fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: usuario,
+        password: this.password
+      })
+    })
+    .then(async response => {
       this.loading = false;
 
-      const isEmailValid = this.email.endsWith('@ucvvirtual.edu.pe');
-      const isPasswordValid = this.password.length >= 8;
+      if (response.ok) {
+        const res = await response.json();
 
-      if (isEmailValid && isPasswordValid) {
-        console.log('Inicio de sesión exitoso');
-        this.loginError = false;
+        //  Guardar información completa en localStorage
+       localStorage.setItem('usuario', JSON.stringify({
+  user_uid: res.user_uid,  // ✅ CAMBIO AQUÍ (antes decía id_usuario)
+  nombre: res.nombre || 'Sin nombre',
+  apellido: res.apellido || 'Sin apellido',
+  correo: this.email,
+  usuario: usuario
+}));
 
-        // Aquí puedes redirigir a otro componente, ejemplo:
-        // this.router.navigate(['/perfil']);
+
+        alert('✅ Inicio de sesión exitoso');
+        this.router.navigate(['/chat']);
       } else {
+        const res = await response.json();
         this.loginError = true;
+        console.error(res.error || 'Error de autenticación');
       }
-    }, 1000);
+    })
+    .catch(err => {
+      console.error(err);
+      this.loading = false;
+      this.loginError = true;
+    });
   }
 
   goToRegistro(): void {
