@@ -1,5 +1,16 @@
 from app.database import conectar
 
+def findByUserName(username):
+    conexion = conectar()
+    if not conexion:
+        return None
+    try:
+        cursor = conexion.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM admin WHERE v_userName = %s", (username,))
+        return cursor.fetchone()
+    finally:
+        conexion.close()
+
 def findById(admin_id):
     conexion = conectar()
     if not conexion:
@@ -14,6 +25,9 @@ def findById(admin_id):
 def create(id, username, email, password):
     conexion = conectar()
     try:
+        userExist = findByUserName(username)
+        if userExist:
+            return None
         cursor = conexion.cursor()
         cursor.execute("INSERT INTO admin (id, v_userName, v_email, v_password) VALUES (%s, %s, %s, %s)", (id, username, email, password))
         conexion.commit()

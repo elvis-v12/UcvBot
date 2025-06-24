@@ -41,3 +41,13 @@ def delete(id):
     if user:
         return jsonify({"mensaje":f"Admin {id} eliminado"})
     return jsonify({"mensaje":"Admin no encontrado"}),404
+
+@adminRoutes.route("/login", methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('v_userName')
+    password = data.get('v_password')
+    user = admin.findByUserName(username)
+    if user and user['v_password']==password:
+        return jsonify({"mensaje":"Login exitoso","user":user}),200
+    return jsonify({"mensaje":"Usuario o contraseña incorrectos"}),401
