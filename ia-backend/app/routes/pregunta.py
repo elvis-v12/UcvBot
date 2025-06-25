@@ -251,3 +251,36 @@ def obtener_sesiones(student_id):
         return jsonify([{"session_id": s[0], "ultima_fecha": s[1].isoformat()} for s in sesiones])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+#Subir pregunta desde el front.
+@pregunta_bp.route('/SubirPregunta', methods=['POST'])
+def subirPregunta():
+    try:
+        data = request.get_json()
+        level_id = data.get('level_id')
+        text_content = data.get('text_content')
+        title = data.get('title')
+        alt1 = data.get('alt1')
+        alt2 = data.get('alt2')
+        alt3 = data.get('alt3')
+        alt4 = data.get('alt4')
+        correct_alt = data.get('correct_alt')
+        print(data)
+        if not all([level_id, text_content, title, alt1, alt2, alt3, alt4, correct_alt]):
+            return jsonify({"error": "Faltan datos"}), 400
+
+        conn = conectar_db()
+        cursor = conn.cursor()
+        # Insertar nueva pregunta
+        cursor.execute("""
+                INSERT INTO questions (level_id, text_content, title,alt1,alt2,alt3,alt4,correct_alt)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (level_id, text_content,title, alt1, alt2, alt3, alt4, correct_alt))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"mensaje": "Pregunta registrada correctamente"})
+
+    except Exception as e:
+        print("❌ Error creando pregunta:", str(e))
+        return jsonify({"error": "Error creando pregunta", "detalle": str(e)}), 500

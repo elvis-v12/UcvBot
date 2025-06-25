@@ -42,9 +42,10 @@
             <input type="text" placeholder="Título de la pregunta" [(ngModel)]="preguntaTitulo"/>
             <textarea placeholder="Contenido de la pregunta..." [(ngModel)]="preguntaContenido"></textarea>
             <div class="alternativas">
-              <div *ngFor="let alt of alternativas; let i=index">
-                <input type="text" placeholder="Alternativa {{i+1}}" [(ngModel)]="alternativas[i]"/>
-              </div>
+              <input type="text" placeholder="Alternativa 1" [(ngModel)]="alternativas[0]" />
+              <input type="text" placeholder="Alternativa 2" [(ngModel)]="alternativas[1]" />
+              <input type="text" placeholder="Alternativa 3" [(ngModel)]="alternativas[2]" />
+              <input type="text" placeholder="Alternativa 4" [(ngModel)]="alternativas[3]" />
             </div>
             <input type="text" [(ngModel)]="indiceCorrecta" placeholder="Número de la alternativa correcta (1-4)" />
             <button class="upload-btn" (click)="subirPregunta()">Subir pregunta</button>
