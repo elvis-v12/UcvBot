@@ -56,3 +56,16 @@ def delete(admin_id):
         return cursor.rowcount
     finally:
         conexion.close()
+
+
+def resetPassword(username, email, password):
+    conexion = conectar()
+    try:
+        cursor = conexion.cursor()
+        cursor.execute("""
+            UPDATE admin SET v_password = %s WHERE v_userName = %s AND v_email = %s
+        """, (password, username, email))
+        conexion.commit()
+        return cursor.rowcount
+    finally:
+        conexion.close()

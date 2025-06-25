@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 interface PasswordStrength {
   class: string;
@@ -29,7 +30,7 @@ export class ResetPasswordComponent {
   messageType: 'success' | 'error' = 'success';
   passwordStrength: PasswordStrength = { class: '', text: '', score: 0 };
 
-  constructor(private router: Router) {}
+    constructor(private http: HttpClient, private router: Router) {}
 
   // ... (resto de métodos igual que antes)
 
@@ -193,29 +194,21 @@ export class ResetPasswordComponent {
       password: this.password
     };
 
-    // Simulación de llamada HTTP
-    setTimeout(() => {
-      this.isLoading = false;
-      
-      const simulateSuccess = Math.random() > 0.3;
-      
-      if (simulateSuccess) {
-        this.showMessage('¡Contraseña restablecida exitosamente!', 'success');
-        
-        // Redirigir al login después del éxito
-        setTimeout(() => {
-          this.clearForm();
-          this.router.navigate(['/login']);
-        }, 2000);
-      } else {
-        const errorType = Math.random();
-        if (errorType < 0.5) {
-          this.showMessage('Usuario no encontrado', 'error');
-        } else {
-          this.showMessage('El email no coincide con el usuario', 'error');
-        }
+    // llamada HTTP
+    this.http.put<any[]>(`http://localhost:5000/api/admins/reset`,{
+      v_userName:this.userName,
+      v_email:this.email,
+      v_password:this.password
+    })
+    .subscribe({
+      next: (response) => {
+        console.log('Constraseña restablecida');
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Error al restablecer contraseña:', error);
       }
-    }, 2500);
+    });
   }
 
   // Limpiar formulario
