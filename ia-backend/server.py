@@ -10,7 +10,10 @@ from app.routes.message import messageRoutes
 from app.routes.registro import registro_bp
 from app.routes.login import login_bp
 from app.routes.perfil import perfil_bp 
+from app.routes.pregunta import pregunta_bp
+
 app = Flask(__name__)
+app.config['DEBUG'] = True  # ✅ Esto permite ver el traceback del error
 CORS(app)
 
 @app.route('/')
@@ -34,6 +37,7 @@ app.register_blueprint(chatRoutes, url_prefix='/api/chats')
 app.register_blueprint(registro_bp, url_prefix='/api')
 app.register_blueprint(login_bp, url_prefix='/api')
 app.register_blueprint(perfil_bp, url_prefix='/api')
+app.register_blueprint(pregunta_bp, url_prefix='/api')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

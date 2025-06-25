@@ -224,3 +224,89 @@ $fondo-claro: #f7f9ff;
     }
   }
 }
+.mensajes {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.usuario {
+  align-self: flex-end;
+  background-color: #dcf8c6;
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
+  max-width: 60%;
+}
+
+.bot {
+  align-self: flex-start;
+  background-color: #f1f0f0;
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
+  max-width: 60%;
+}
+
+
+.sidebar {
+  background-color: #990000;
+  color: white;
+  padding: 1.5rem;
+  width: 260px;
+  height: 100vh;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+
+.nuevo-chat {
+  background-color: #fff;
+  color: #990000;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.nuevo-chat:hover {
+  background-color: #f3f3f3;
+}
+
+.titulo-historial {
+  font-size: 16px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.chat-historial {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-historial li {
+  margin-bottom: 10px;
+}
+
+.historial-item {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  color: #333;
+  padding: 10px 14px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.historial-item:hover {
+  background-color: #ffffff;
+  transform: scale(1.02);
+}
