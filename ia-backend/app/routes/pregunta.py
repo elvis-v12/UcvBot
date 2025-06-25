@@ -50,10 +50,10 @@ def procesar_pregunta():
         return jsonify({"respuesta": respuesta})
 
     except Exception as e:
-        print("❌ Error interno:", str(e))
+        print(" Error interno:", str(e))
         return jsonify({"error": "Error interno del servidor", "detalle": str(e)}), 500
 
-# ✅ Nuevo endpoint para crear sesión manualmente (si se desea desde Angular)
+# Nuevo endpoint para crear sesión manualmente 
 @pregunta_bp.route('/sesion', methods=['POST'])
 def crear_sesion():
     try:
@@ -83,10 +83,10 @@ def crear_sesion():
         return jsonify({"mensaje": "Sesión registrada correctamente"})
 
     except Exception as e:
-        print("❌ Error creando sesión:", str(e))
+        print(" Error creando sesión:", str(e))
         return jsonify({"error": "Error creando sesión", "detalle": str(e)}), 500
 
-# ✅ Endpoint para obtener historial por sesión
+#  Endpoint para obtener historial por sesión
 @pregunta_bp.route('/historial/<session_id>/<student_id>', methods=['GET'])
 def obtener_historial(session_id, student_id):
     try:
