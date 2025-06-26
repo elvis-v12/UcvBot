@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from mini_db.conexion import conectar_db
+import logging
 
 perfil_bp = Blueprint('perfil_bp', __name__)
 
@@ -35,17 +36,25 @@ def obtener_perfil():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
 @perfil_bp.route('/perfil', methods=['PUT'])
 def actualizar_perfil():
-    data = request.get_json()
-    user_uid = data.get('user_uid')
-    nombre = data.get('nombre')
-    apellidoPaterno = data.get('apellidoPaterno')
-    apellidoMaterno = data.get('apellidoMaterno')
-    correo = data.get('correo')
-    foto = data.get('foto')
-
     try:
+        data = request.get_json(force=True)
+        user_uid = data.get('user_uid')
+        nombre = data.get('nombre')
+        apellidoPaterno = data.get('apellidoPaterno')
+        apellidoMaterno = data.get('apellidoMaterno')
+        foto = data.get('foto')
+
+        if not all([user_uid, nombre, apellidoPaterno, apellidoMaterno]):
+            return jsonify({'error': 'Faltan datos requeridos'}), 400
+
+        if foto and len(foto) > 500000:
+            return jsonify({'error': 'La imagen es muy grande'}), 400
+
+        logging.debug(f"📦 Datos recibidos: {data}")
+
         conn = conectar_db()
         cursor = conn.cursor()
 
@@ -54,10 +63,9 @@ def actualizar_perfil():
             SET v_userName = %s,
                 v_apellidoPaterno = %s,
                 v_apellidoMaterno = %s,
-                v_email = %s,
                 v_photoURL = %s
             WHERE v_userUID = %s
-        """, (nombre, apellidoPaterno, apellidoMaterno, correo, foto, user_uid))
+        """, (nombre, apellidoPaterno, apellidoMaterno, foto, user_uid))
 
         conn.commit()
         cursor.close()
@@ -65,4 +73,5 @@ def actualizar_perfil():
 
         return jsonify({'mensaje': 'Perfil actualizado correctamente'}), 200
     except Exception as e:
+        logging.exception("❌ Error en PUT /perfil")
         return jsonify({'error': str(e)}), 500

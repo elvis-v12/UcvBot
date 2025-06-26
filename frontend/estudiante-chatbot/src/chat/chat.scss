@@ -68,7 +68,6 @@ $fondo-claro: #f7f9ff;
 
     .chat-body {
       flex: 1;
-      padding: 2rem;
       text-align: center;
 
       h2 {
@@ -228,7 +227,11 @@ $fondo-claro: #f7f9ff;
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  height: 270px; /* ✅ Ajusta este valor según el diseño */
+  overflow-y: auto; /* ✅ Scroll vertical */
+  scroll-behavior: smooth;
 }
+
 
 .usuario {
   align-self: flex-end;
@@ -287,6 +290,17 @@ $fondo-claro: #f7f9ff;
   list-style: none;
   padding: 0;
   margin: 0;
+  max-height: 70vh;        
+  overflow-y: auto;         
+}
+
+.chat-historial::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-historial::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
 
 .chat-historial li {
@@ -309,4 +323,215 @@ $fondo-claro: #f7f9ff;
 .historial-item:hover {
   background-color: #ffffff;
   transform: scale(1.02);
+}
+.cronometro {
+  background-color: #ffe082;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.formulario-examen {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  max-width: 600px;
+  margin: auto;
+}
+
+.bloque-pregunta {
+  margin-bottom: 20px;
+}
+
+.opcion {
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.examen-boton-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.btn-examen {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn-examen:hover {
+  background-color: #0056b3;
+}
+
+.formulario-examen {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.bloque-pregunta {
+  margin-bottom: 20px;
+}
+
+.opcion {
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.btn-finalizar {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-finalizar:hover {
+  background-color: #1e7e34;
+}
+.boton-flotante {
+  position: fixed;
+  bottom: 80px;
+  right: 30px;
+  background-color: #1976d2;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.boton-flotante:hover {
+  background-color: #125a9c;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); // fondo oscuro traslúcido
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-contenido {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-contenido h2 {
+  text-align: center;
+  color: #151849;
+  font-size: 28px;
+  margin-bottom: 1.5rem;
+}
+
+.modal-contenido .pregunta {
+  margin-bottom: 1.2rem;
+}
+
+.modal-contenido p {
+  font-weight: bold;
+  font-size: 17px;
+  color: #222;
+}
+
+.modal-contenido label {
+  display: block;
+  margin-left: 1rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.modal-contenido input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+.modal-contenido .tiempo-restante {
+  background-color: #ffe58f;
+  padding: 0.8rem;
+  font-weight: bold;
+  color: #5a2a00;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modal-contenido .botones {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.modal-contenido .botones button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modal-contenido .botones button:hover {
+  background-color: #218838;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.mensaje-final {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background-color: #4CAF50; /* verde para aprobado */
+  border-radius: 8px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

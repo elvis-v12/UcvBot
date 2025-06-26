@@ -26,7 +26,8 @@
       <input [(ngModel)]="datosUsuario.apellidoMaterno" name="apellidoMaterno" [disabled]="!modoEdicion" />
 
       <label for="correo">Correo Electrónico</label>
-      <input [(ngModel)]="datosUsuario.correo" name="correo" [disabled]="!modoEdicion" />
+      <input type="email" [(ngModel)]="datosUsuario.correo" name="correo" disabled />
+
 
       <label for="usuario">Nombre de Usuario</label>
       <input [(ngModel)]="datosUsuario.usuario" name="usuario" disabled />

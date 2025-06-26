@@ -61,7 +61,16 @@ export class PerfilComponent implements OnInit {
 
   guardarCambios(): void {
     if (this.datosUsuario.user_uid) {
-      this.http.put('http://localhost:5000/api/perfil', this.datosUsuario).subscribe({
+      // Excluye correo y usuario del PUT
+      const datosActualizados = {
+        nombre: this.datosUsuario.nombre,
+        apellidoPaterno: this.datosUsuario.apellidoPaterno,
+        apellidoMaterno: this.datosUsuario.apellidoMaterno,
+        foto: this.datosUsuario.foto,
+        user_uid: this.datosUsuario.user_uid
+      };
+
+      this.http.put('http://localhost:5000/api/perfil', datosActualizados).subscribe({
         next: () => {
           console.log('✅ Perfil actualizado correctamente');
           this.modoEdicion = false;
