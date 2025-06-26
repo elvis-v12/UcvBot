@@ -31,6 +31,7 @@ export class Chat implements OnInit {
   mostrarModalExamen: boolean = false;
   tiempoRestante: number = 300;
   intervaloTiempo: any;
+  preguntas: string[] = [];
 
   examenPreguntas: { texto: string, opciones: string[], correcta?: string, respuestaSeleccionada?: string }[] = Array.from({ length: 20 }, (_, i) => ({
     texto: `Pregunta ${i + 1}: Escribe tu respuesta`,
@@ -70,7 +71,7 @@ export class Chat implements OnInit {
           this.nuevoChat();
         }
       }
-
+      this.cargarPreguntas();
       this.cargarSesionesAnteriores();
     }
   }
@@ -149,11 +150,11 @@ export class Chat implements OnInit {
   }
 
   async enviarPreguntaIA(pregunta: string): Promise<void> {
-    if (!this.usuario?.user_uid || !pregunta.trim() || !this.sessionId) return;
+    if (!this.usuario?.user_uid || !this.sessionId) return;
 
     try {
       const resultado = await this.iaService
-        .enviarPregunta(pregunta, this.usuario.user_uid, this.sessionId)
+        .enviarPregunta(`${pregunta}`, this.usuario.user_uid, this.sessionId)
         .toPromise();
 
       this.respuestaIA = resultado.respuesta || 'Sin respuesta';
@@ -174,7 +175,7 @@ export class Chat implements OnInit {
   abrirExamen(): void {
     const mensajesUsuario = this.mensajes
       .filter(m => m.de === 'usuario')
-      .map(m => m.texto);
+      .map(m => `${m.texto}`);
 
     this.iaService.generarPreguntasExamen(mensajesUsuario).subscribe({
       next: (preguntasGeneradas) => {
@@ -240,4 +241,16 @@ export class Chat implements OnInit {
 
     alert(this.mensajeFinal);
   }
+
+  cargarPreguntas(){
+    this.iaService.cargarPreguntas()
+    .subscribe({
+      next: (preguntas: string[]) => {
+        this.preguntas = preguntas;
+        console.log("✅ Preguntas cargadas")
+      },
+      error: (err) => console.error("❌ Error al cargar preguntas:", err)
+    });
+  }
+
 }

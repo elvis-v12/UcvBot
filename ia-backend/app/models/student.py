@@ -1,7 +1,7 @@
-from app.database import conectar
+from mini_db.conexion import conectar_db
 
 def getAll():
-    conexion = conectar()
+    conexion = conectar_db()
     if not conexion:
         return None
     try:

@@ -172,3 +172,18 @@ El resultado debe ser un JSON válido de 20 objetos, sin explicaciones adicional
     except Exception as e:
         print("❌ Error generando preguntas con Gemini:", str(e))
         return jsonify({"error": "Error al generar preguntas", "detalle": str(e)}), 500
+    
+
+@pregunta_bp.route('/CargarPreguntas', methods=['GET'])
+def cargar_preguntas():
+    try:
+        conn = conectar_db()
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT v_content FROM alternative")
+        preguntas = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return jsonify(preguntas)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

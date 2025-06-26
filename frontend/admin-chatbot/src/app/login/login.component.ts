@@ -36,6 +36,9 @@ export class LoginComponent {
         this.message = response.mensaje;
         this.messageType = 'success';
         console.log('Usuario logueado:', response.user);
+        if (typeof window !== 'undefined' && localStorage) {
+            localStorage.setItem('usuarioAdmin', JSON.stringify(response.user));
+        }
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
@@ -59,5 +62,7 @@ export class LoginComponent {
   clearInput() {
     this.password = '';
   }
+
+  
 
 }

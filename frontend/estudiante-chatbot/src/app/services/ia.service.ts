@@ -55,4 +55,9 @@ export class IaService {
       headers: this.getHeaders()
     });
   }
+
+  // ✅ Cargar preguntas desde la API (v_content)
+  cargarPreguntas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/CargarPreguntas`);
+  }
 }

@@ -37,10 +37,9 @@
       <p>¿En qué puedo ayudarte?</p>
 
       <div class="botones">
-        <button (click)="enviarPreguntaIA('Dame ejercicios básicos en Java')">Dame ejercicios básicos en Java</button>
-        <button (click)="enviarPreguntaIA('Definición de Java')">Definición de Java</button>
-        <button (click)="enviarPreguntaIA('Dame ejercicios de for')">Dame ejercicios de for</button>
-        <button (click)="enviarPreguntaIA('Crea ejercicios de if')">Crea ejercicios de if</button>
+        <button *ngFor="let pregunta of preguntas" (click)="enviarPreguntaIA(pregunta)">
+          {{ pregunta }}
+        </button>
       </div>
 
       <p class="nota">

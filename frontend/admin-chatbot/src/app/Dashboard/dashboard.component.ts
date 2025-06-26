@@ -74,6 +74,11 @@ export class DashboardComponent {
     this.selectedNivel = n;
   }
 
+  logout() {
+  localStorage.removeItem('usuarioAdmin');
+  this.router.navigate(['/login']);
+}
+
   subirPregunta() {
     if (!this.selectedNivel || !this.preguntaTitulo || !this.preguntaContenido ||
         this.alternativas.some(a => !a) || !['1','2','3','4'].includes(this.indiceCorrecta)) {
@@ -102,7 +107,7 @@ export class DashboardComponent {
       }
     });
 
-
+    
 
     this.mensaje = `✅ Pregunta subida al nivel ${this.selectedNivel}.`;
     // Reset
