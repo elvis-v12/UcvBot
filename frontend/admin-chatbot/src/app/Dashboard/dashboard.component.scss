@@ -45,14 +45,7 @@
         .nivel { font-weight:700; &.basico { color:#2c7be5; } &.intermedio { color:#ff9800; } &.avanzado { color:#c40000; } }
       }
       .not-found { font-style:italic; color:#ccc; }
-      .level-selectors {
-        display:flex; gap:10px; margin-bottom:20px;
-        button {
-          padding:10px 16px; border:none; border-radius:10px; background:#fff; color:#080939; font-weight:600; cursor:pointer; transition: background 0.3s;
-          &.selected { background:#c40000; color:#fff;}
-          &:hover:not(.selected){ background:#f5f5f5; }
-        }
-      }
+  
       .upload-form {
         display:flex; flex-direction:column; gap:14px;
         input, textarea {
@@ -60,9 +53,7 @@
           &::placeholder { color:#666; }
         }
         textarea { height:100px; resize:vertical; }
-        .alternativas { display:grid; grid-template-columns:1fr; gap:10px;
-          input { padding:10px; border-radius:8px; }
-        }
+        
         .upload-btn {
           padding:12px; border:none; border-radius:10px; background:#c40000; color:#fff; font-weight:700; cursor:pointer; transition: background 0.3s;
           &:hover { background:#d60000; }

@@ -38,24 +38,11 @@
           <div *ngIf="searchTerm && !filteredStudents" class="not-found">No se encontró el estudiante.</div>
         </div>
   
-        <!-- TAB: SUBIR PREGUNTA -->
+        <!-- TAB: SUBIR nombre -->
         <div *ngIf="activeTab==='pregunta'" class="section animate-in">
           <h2>Subir pregunta</h2>
-          <div class="level-selectors">
-            <button *ngFor="let nivel of niveles" [class.selected]="selectedNivel===nivel" (click)="selectNivel(nivel)">
-              {{ nivel }}
-            </button>
-          </div>
           <div class="upload-form">
             <input type="text" placeholder="Título de la pregunta" [(ngModel)]="preguntaTitulo"/>
-            <textarea placeholder="Contenido de la pregunta..." [(ngModel)]="preguntaContenido"></textarea>
-            <div class="alternativas">
-              <input type="text" placeholder="Alternativa 1" [(ngModel)]="alternativas[0]" />
-              <input type="text" placeholder="Alternativa 2" [(ngModel)]="alternativas[1]" />
-              <input type="text" placeholder="Alternativa 3" [(ngModel)]="alternativas[2]" />
-              <input type="text" placeholder="Alternativa 4" [(ngModel)]="alternativas[3]" />
-            </div>
-            <input type="text" [(ngModel)]="indiceCorrecta" placeholder="Número de la alternativa correcta (1-4)" />
             <button class="upload-btn" (click)="subirPregunta()">Subir pregunta</button>
             <p class="msg" *ngIf="mensaje">{{ mensaje }}</p>
           </div>
