@@ -3,6 +3,7 @@ import datetime, uuid, os, json
 from dotenv import load_dotenv
 import google.generativeai as genai
 from mini_db.conexion import conectar_db
+import uuid
 
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
@@ -187,3 +188,24 @@ def cargar_preguntas():
         return jsonify(preguntas)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@pregunta_bp.route('/InsertarPregunta', methods=['POST'])
+def insertar_pregunta():
+    try:
+        data = request.get_json()
+        v_content = data.get('v_content')
+
+        if not v_content:
+            return jsonify({"error": "Falta el campo v_content"}), 400
+
+        v_id = str(uuid.uuid4())
+
+        conn = conectar_db()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO alternative (v_id, v_content) VALUES (%s, %s)", (v_id, v_content))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"mensaje": "Pregunta insertada correctamente", "v_id": v_id})
+    except Exception as e:
+        return

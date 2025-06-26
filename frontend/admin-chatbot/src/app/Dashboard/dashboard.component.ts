@@ -80,36 +80,27 @@ export class DashboardComponent {
 }
 
   subirPregunta() {
-    if (!this.selectedNivel || !this.preguntaTitulo || !this.preguntaContenido ||
-        this.alternativas.some(a => !a) || !['1','2','3','4'].includes(this.indiceCorrecta)) {
+    if (!this.preguntaTitulo) {
       this.mensaje = 'Completa todos los campos y selecciona nivel & alternativa correcta.';
       return;
     }
 
-    this.http.post('http://localhost:5000/api/SubirPregunta', {
-      level_id: this.niveles.indexOf(this.selectedNivel) + 1,
-      title: this.preguntaTitulo,
-      text_content: this.preguntaContenido,
-      alt1: this.alternativas[0],
-      alt2: this.alternativas[1],
-      alt3: this.alternativas[2],
-      alt4: this.alternativas[3],
-      correct_alt: Number(this.indiceCorrecta)
+    this.http.post('http://localhost:5000/api/InsertarPregunta', {
+      v_content: this.preguntaTitulo
     })
     .subscribe({
       next: (response) => {
-      console.log('Pregunta subida correctamente');
-      this.mensaje = '✅ Exito al subir la pregunta.';
+        console.log('Pregunta subida correctamente');
+        this.mensaje = '✅ Exito al subir la pregunta.';
       },
       error: (error) => {
-      console.error('Error al enviar la pregunta:', error);
-      this.mensaje = '❌ Error al subir la pregunta.';
+        console.error('Error al enviar la pregunta:', error);
+        this.mensaje = '❌ Error al subir la pregunta.';
       }
     });
 
-    
 
-    this.mensaje = `✅ Pregunta subida al nivel ${this.selectedNivel}.`;
+    this.mensaje = `✅ Pregunta subida.`;
     // Reset
     this.selectedNivel = '';
     this.preguntaTitulo = '';
